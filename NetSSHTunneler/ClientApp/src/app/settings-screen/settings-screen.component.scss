@@ -1,0 +1,103 @@
+#network-map-component {
+  color: #41ff00;
+  padding-bottom: 32px;
+  mat-form-field {
+    width: 100%;
+  }
+  ::ng-deep .mat-form-field-label {
+    color: #40ff008f;
+  }
+  ::ng-deep .mat-form-field-appearance-standard .mat-form-field-underline {
+    background-color: yellow;
+  }
+  ::ng-deep mat-form-field.mat-focused .mat-form-field-label {
+    color: yellow;
+  }
+  ::ng-deep mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: yellow;
+  }
+  ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #071525;
+  }
+
+  ::ng-deep .mat-radio-outer-circle {
+    border: #41ff00 1px solid;
+  }
+
+  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #41ff00;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    .form-box {
+      color: #41ff00;
+      border: 1px solid #41ff00;
+      padding: 8px;
+      //background-color: aliceblue;
+    }
+    .save {
+      border: #41ff00 1px solid;
+      &:hover {
+        background-color: #41ff00;
+        color: black;
+      }
+    }
+    .flex {
+      display: flex;
+      gap: 10px;
+      &.right {
+        justify-content: flex-end;
+      }
+      .flex-big {
+        flex-grow: 10;
+      }
+      .flex-small {
+        flex-grow: 1;
+      }
+    }
+  }
+  .title-top {
+    border-bottom: #41ff00 1px dotted;
+    margin-bottom: 24px;
+    font-size: 24px;
+    mat-icon {
+      color: #41ff00;
+      font-size: 20px;
+      width: 20px;
+      cursor: pointer;
+    }
+  }
+
+  .configuration-box {
+    border: #41ff00 1px dotted;
+    padding: 16px;
+    width: 80%;
+    margin: 12px auto;
+
+    &.right {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .button {
+      border: #41ff00 1px solid;
+      padding: 4px 16px;
+      cursor: pointer;
+      &:hover {
+        background-color: #41ff00;
+        color: black;
+      }
+    }
+
+    mat-radio-button {
+      margin-right: 12px;
+    }
+
+    .configuration-title {
+      border-bottom: #41ff00 1px dotted;
+      margin-bottom: 8px;
+    }
+  }
+}

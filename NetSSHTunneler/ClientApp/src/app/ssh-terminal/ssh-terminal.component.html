@@ -1,0 +1,21 @@
+<div id="ssh-terminal-component" cdkDrag [cdkDragFreeDragPosition]="dragPosition">
+  <div class="terminal-title" cdkDragHandle>
+    <div>
+      SSH Terminal
+    </div>
+    <div class="close" (click)="this.onSshTerminalClose()">
+      X
+    </div>
+  </div>
+  <div class="terminal-description">
+    <div *ngFor="let response of responses; index as i;">
+      <div *ngFor="let result of response.results; index as i;"
+        [ngClass]="{'error': response.type === 1, 'send' : response.type === 2 }">
+        {{result}}
+      </div>
+    </div>
+    <div class="command-line">{{path}}
+      <div class="editable-command" contenteditable="true" (keyup.enter)="sendCommand()" #command></div>
+    </div>
+  </div>
+</div>

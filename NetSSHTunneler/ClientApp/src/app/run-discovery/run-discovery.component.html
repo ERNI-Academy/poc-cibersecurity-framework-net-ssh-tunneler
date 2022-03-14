@@ -1,0 +1,50 @@
+<div id="network-map-component">
+  <div class="title-top">
+    <mat-icon (click)="goBack()">arrow_back</mat-icon> Run discovery
+  </div>
+
+  <div class="network-map-content flex">
+    <div class="section">
+      <div class="title">Select a discovery configuration to run</div>
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        [(ngModel)]="selectedDiscoveryConfiguration">
+        <mat-radio-button class="example-radio-button" *ngFor="let conf of this.discoveryConfigurationsList"
+          [value]="conf">
+          {{conf.configurationName}}
+        </mat-radio-button>
+      </mat-radio-group>
+      <div class="flex right">
+        <div class="button" (click)="this.onLaunch()">
+          Launch
+        </div>
+      </div>
+    </div>
+    <div class="terminal-discovery">
+      <div class="terminal-discovery-title">
+        Discovery terminal...
+      </div>
+      <div class="terminal-discovery-content">
+        <div *ngIf="loading; else contentBlock">
+          {{loadingMsg}}
+          <mat-progress-bar mode="buffer"></mat-progress-bar>
+        </div>
+        <ng-template #contentBlock>
+          <div *ngIf="receivedContent; else noContentBlock">
+            <div *ngFor="let command of this.discoveryResults.commandResponses; index as i;" class="command">
+              <div class="command-send">
+                {{command.command}} <span class="command-path">{{command.path}}</span>
+              </div>
+              <div *ngFor="let result of command.results; index as j;" class="command-received">
+                {{result}}
+              </div>
+            </div>
+          </div>
+          <ng-template #noContentBlock>
+            {{content}}
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+</div>

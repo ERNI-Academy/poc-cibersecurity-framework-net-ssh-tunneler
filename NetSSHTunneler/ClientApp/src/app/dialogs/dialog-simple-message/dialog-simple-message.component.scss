@@ -1,0 +1,21 @@
+.dialog-simple-message{
+  width: 500px;
+  border: 1px solid #41ff00;
+  color: #41ff00;
+  .dialog-pading {
+    padding: 8px;
+  }
+  .dialog-title {
+    //background-color: #071525;
+    //color: yellow;
+    border-bottom: 1px solid #41ff00;
+  }
+  .dialog-content {
+    color: #41ff00;
+  }
+}
+
+::ng-deep .mat-dialog-container {
+  background-color: #000;
+  padding: 0;
+}

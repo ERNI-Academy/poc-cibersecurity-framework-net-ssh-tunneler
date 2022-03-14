@@ -1,0 +1,29 @@
+<!-- <div id="home-component">
+  <div *ngIf="loading; else elseBlock">
+    {{loadingMessage}}
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </div>
+  <ng-template #elseBlock>
+    <div *ngIf="dashboardConfigured; else dashboardBlock">
+      <app-dashboard></app-dashboard>
+    </div>
+    <ng-template #dashboardBlock>
+      <app-connection-form></app-connection-form>
+    </ng-template>
+  </ng-template>
+</div> -->
+
+<div id="home-component">
+  <div *ngIf="loading; else elseBlock">
+    {{loadingMessage}}
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </div>
+  <ng-template #elseBlock>
+    <div *ngIf="dashboardConfigured; else dashboardBlock">
+      <app-dashboard></app-dashboard>
+    </div>
+    <ng-template #dashboardBlock>
+      <app-connection-form></app-connection-form>
+    </ng-template>
+  </ng-template>
+</div>

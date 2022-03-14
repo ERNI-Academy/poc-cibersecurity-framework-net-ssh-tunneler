@@ -1,0 +1,33 @@
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+}
+
+.custom-nav {
+  background-color: #000;
+  height: 40px;
+  border-bottom: 1px solid #41ff00;
+}
+
+.color-terminal {
+  color: #41ff00;
+}
+
+.targetIp {
+  color: #41ff00;
+  cursor: pointer;
+}

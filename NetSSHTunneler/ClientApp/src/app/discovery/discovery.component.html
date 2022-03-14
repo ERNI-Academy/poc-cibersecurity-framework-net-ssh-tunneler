@@ -1,0 +1,148 @@
+<div id="discovery-component">
+  <div class="title-top">
+    <mat-icon (click)="goBack()">arrow_back</mat-icon> Discovery configuration
+  </div>
+
+  <div class="discovery-drag-container">
+    <h4>Options</h4>
+    <div *ngFor="let folder of discoveryFolders; index as i;">
+      <div class="folder" cdkDropList #todoList="cdkDropList" [cdkDropListConnectedTo]="[doneList]">
+        <span class="title">{{folder.name}}</span>
+        <div *ngFor="let script of folder.scripts; index as i;" class="script" cdkDrag
+          (cdkDropListDropped)="drop($event)" [cdkDragData]="script" (click)="this.onPreview(script)">
+          {{script.name}}
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <div class="button" (click)="this.newCommand()">New command</div>
+    </div>
+  </div>
+
+  <div class="discovery-drag-container">
+    <h4>Configuration</h4>
+    <div class="flex-item flex-small">
+      <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" [(ngModel)]="filename" autocomplete="off">
+      </mat-form-field>
+    </div>
+    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="configuredScripts"
+      class="scripts-list" (cdkDropListDropped)="drop($event)">
+      <div class="script-box" *ngFor="let item of configuredScripts;index as i;" cdkDrag>
+        <div>{{item.name}}</div>
+        <div class="close" (click)="this.deleteScriptItem(i)">
+          X
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <div class="button" (click)="this.onLoadConfiguration()">Load</div>
+      <div class="button" (click)="this.onSaveConfiguration()">Save</div>
+    </div>
+  </div>
+  <div class="discovery-preview-container">
+    <h4>Preview</h4>
+    <div class="preview-content">
+      <div class="title">
+        {{this.preview.name}}
+      </div>
+      <!-- <div class="content">
+        <textarea [(ngModel)]="this.preview.content">
+          </textarea>
+      </div> -->
+      <div class="dialog-content dialog-pading">
+        <div class="section">
+          Command properties
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Command name</mat-label>
+              <input matInput type="text" [(ngModel)]="this.preview.name" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-slide-toggle [(ngModel)]="this.preview.content.interactive">
+              Interactive
+            </mat-slide-toggle>
+          </div>
+        </div>
+        <div class="section">
+          Command data
+          <mat-form-field appearance="fill">
+            <mat-label>Commands</mat-label>
+            <input matInput type="text" [(ngModel)]="this.preview.content.commansLineTransformation" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div class="section">
+          Command config
+          <mat-form-field appearance="fill">
+            <mat-label>Timeout</mat-label>
+            <input matInput type="text" [(ngModel)]="this.preview.content.commandConfig.timeout" autocomplete="off">
+          </mat-form-field>
+          <div class="slider">
+            <mat-slide-toggle [(ngModel)]="this.preview.content.commandConfig.output.saveOutput">
+              Output: Save Output
+            </mat-slide-toggle>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Output: Filename</mat-label>
+              <input matInput type="text" [(ngModel)]="this.preview.content.commandConfig.output.filename"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="slider">
+            <mat-slide-toggle [(ngModel)]="this.preview.content.commandConfig.crack.doCrack">
+              Crack: Do Crack
+            </mat-slide-toggle>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Crack: HashFile</mat-label>
+              <input matInput type="text" [(ngModel)]="this.preview.content.commandConfig.crack.hashFile"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Crack: Dictionary</mat-label>
+              <input matInput type="text" [(ngModel)]="this.preview.content.commandConfig.crack.dictionary"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="slider">
+            <mat-slide-toggle [(ngModel)]="this.preview.content.commandConfig.discovery.runDiscovery">
+              Discovery: Run Discovery
+            </mat-slide-toggle>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Discovery: NetworkCommand</mat-label>
+              <input matInput type="text" [(ngModel)]="this.preview.content.commandConfig.discovery.networkCommand"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Discovery: HostCommand</mat-label>
+              <input matInput type="text" [(ngModel)]="this.preview.content.commandConfig.discovery.hostCommand"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Discovery: PortCommand</mat-label>
+              <input matInput type="text" [(ngModel)]="this.preview.content.commandConfig.discovery.portCommand"
+                autocomplete="off">
+            </mat-form-field>
+          </div>
+
+        </div>
+      </div>
+      <div class="buttons">
+        <div class="button" (click)="this.onSave()">Save</div>
+      </div>
+    </div>
+
+  </div>
+</div>

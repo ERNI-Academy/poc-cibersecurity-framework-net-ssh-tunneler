@@ -1,0 +1,36 @@
+#dashboard-component {
+  color: #41ff00;
+  .section {
+    border-bottom: #41ff00 1px dotted;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+  .desktop {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    .icon-button {
+      border: 1px solid #41ff00;
+      padding: 4px;
+      cursor: pointer;
+      &.tbd {
+        cursor: not-allowed;
+        &:hover {
+          border: 1px solid #40ff006c;
+        }
+      }
+      &:hover {
+        border: 1px solid yellow;
+      }
+      .icon {
+        width: 100px;
+      }
+    }
+  }
+
+  .ssh-terminal {
+    &.invisible {
+      visibility: hidden;
+    }
+  }
+}

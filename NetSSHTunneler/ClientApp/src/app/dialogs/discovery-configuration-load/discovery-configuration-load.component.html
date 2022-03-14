@@ -1,0 +1,21 @@
+<div id="new-command-dialog">
+  <div class="dialog-title dialog-pading">{{data.title}}</div>
+  <div class="dialog-content dialog-pading">
+    <div class="section">
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+        [(ngModel)]="selectedConfiguration">
+        <mat-radio-button class="example-radio-button" *ngFor="let conf of data.discoveryConfigurationList" [value]="conf">
+          {{conf.configurationName}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div class="dialog-button dialog-pading">
+    <div class="button" mat-dialog-close>
+      Cancel
+    </div>
+    <div class="button" (click)="onLoad()">
+      Load
+    </div>
+  </div>
+</div>

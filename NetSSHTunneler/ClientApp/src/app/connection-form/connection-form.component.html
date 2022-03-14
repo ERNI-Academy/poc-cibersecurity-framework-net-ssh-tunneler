@@ -1,0 +1,54 @@
+<div id="connection-form-component">
+  <div class="title-top">
+    <mat-icon (click)="goBack()">arrow_back</mat-icon> New target
+  </div>
+  <div class="form-box">
+    <div class="form-box">
+      <div class="title">Please, fill the form for adding a new target</div>
+    </div>
+    <div class="form-box">
+      <div>
+        <div class="flex">
+          <div class="flex-item flex-big">
+            <mat-form-field appearance="fill">
+              <mat-label>Target IP</mat-label>
+              <input matInput type="text" [(ngModel)]="targetIp" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="flex-item flex-small">
+            <mat-form-field appearance="fill">
+              <mat-label>Target Port</mat-label>
+              <input matInput type="text" [(ngModel)]="targetPort" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="flex-item flex-small">
+            <mat-form-field appearance="fill">
+              <mat-label>UserName</mat-label>
+              <input matInput type="text" [(ngModel)]="userName" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div class="flex-item flex-small">
+            <mat-form-field appearance="fill">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" [(ngModel)]="password" autocomplete="off">
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Certificate</mat-label>
+          <input matInput type="text" [(ngModel)]="certificate" autocomplete="off">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Additional SSH Parameters</mat-label>
+          <input matInput type="text" [(ngModel)]="aditionalSshParameters" autocomplete="off">
+        </mat-form-field>
+        <div class="flex right">
+          <div  (click)="this.checkconnection()" class="button">Save</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

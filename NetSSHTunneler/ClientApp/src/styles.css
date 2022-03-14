@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  /* //font-family: 'Press Start 2P', cursive; */
+  background-color: #000;
+}
+
+/* * {
+  //font-family: 'Press Start 2P', cursive;
+  
+} */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #248d0160;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #41ff00;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: yellow;
+}
+
+.mat-snack-bar-container {
+  background-color: #000;
+  border: yellow 2px solid;
+  color: yellow;
+  font-size: 24px;
+  font-weight: 500;
+  padding: 25px !important;
+}
+
+.button {
+  cursor: pointer;
+  border: #41ff00 1px solid;
+  padding: 4px 16px;
+}
+
+.button:hover {
+  background-color: #41ff00;
+  color: black;
+}

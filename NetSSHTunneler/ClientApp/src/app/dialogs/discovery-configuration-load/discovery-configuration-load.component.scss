@@ -1,0 +1,85 @@
+::ng-deep .mat-dialog-container {
+  background-color: #000;
+  padding: 0;
+}
+
+#new-command-dialog {
+  color: #41ff00;
+  width: 750px;
+  .dialog-title {
+    background-color: #41ff00;
+    color: black;
+    padding: 8px;
+  }
+  .dialog-button {
+    padding: 8px;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    .button {
+      cursor: pointer;
+      border: #41ff00 1px solid;
+      padding: 4px 16px;
+      &:hover {
+        background-color: #41ff00;
+        color: black;
+      }
+    }
+  }
+  .dialog-content {
+    padding: 8px 16px;
+    .section {
+      border-bottom: #41ff00 1px dotted;
+      margin-bottom: 4px;
+      .flex {
+        display: flex;
+        gap: 10px;
+        &.right {
+          justify-content: flex-end;
+        }
+        .flex-big {
+          flex-grow: 10;
+        }
+        .flex-small {
+          flex-grow: 1;
+        }
+      }
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+  ::ng-deep .mat-form-field-label {
+    color: #40ff008f;
+  }
+  ::ng-deep .mat-form-field-appearance-standard .mat-form-field-underline {
+    background-color: yellow;
+  }
+  ::ng-deep mat-form-field.mat-focused .mat-form-field-label {
+    color: yellow;
+  }
+  ::ng-deep mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: yellow;
+  }
+  ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: #071525;
+  }
+
+  ::ng-deep .mat-radio-outer-circle {
+    border: #41ff00 1px solid;
+  }
+  
+  ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #41ff00;
+  }
+
+  mat-radio-button {
+    margin-right: 12px;
+  }
+
+  ::ng-deep .mat-radio-button {
+    display: block;
+  }
+}
+

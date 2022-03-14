@@ -1,0 +1,43 @@
+#ssh-terminal-component {
+  width: 80%;
+  margin: 24px auto;
+  border: 1px solid #41ff00;
+  box-shadow: 8px 8px #40ff0065;
+  .terminal-title {
+    background-color: #41ff00;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    .close {
+      margin-right: 12px;
+      cursor: pointer;
+    }
+    cursor: all-scroll;
+    padding: 4px;
+  }
+  .terminal-description {
+    padding: 4px;
+    height: 500px;
+    overflow-y: auto;
+    background-color: black;
+    .error {
+      color: red;
+    }
+    .send {
+      color: yellow;
+    }
+    .command-line {
+      display: flex;
+      color: yellow;
+      .editable-command {
+        color: yellow;
+        width: 100%;
+        margin-left: 4px;
+        background-color: #91919127;
+        &:focus-visible {
+          outline: none;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+<div id="dashboard-component">
+  <!-- <div class="section">
+    Network status
+  </div>
+  Connected to: {{targetIp}} -->
+  <div class="section">
+    Apps
+  </div>
+  <div class="desktop">
+    <div class="icon-button" (click)="this.onNetworkMap()">
+      <img class="icon" src="../../assets/network-map.png">
+    </div>
+    <div class="icon-button" (click)="this.onRunDiscovery()">
+      <img class="icon" src="../../assets/run-discovery.png">
+    </div>
+    <div class="icon-button" (click)="this.onSshTerminal()">
+      <img class="icon" src="../../assets/ssh.png">
+    </div>
+  </div>
+  <div class="section">
+    Configurations
+  </div>
+  <div class="desktop">
+    <!-- <div class="icon-button tbd">
+      <img class="icon" src="../../assets/TBD.png">
+    </div> -->
+    <div class="icon-button" (click)="this.onDiscoveryConfiguration()">
+      <img class="icon" src="../../assets/discovery.png">
+    </div>
+    <div class="icon-button" (click)="this.onNewTarget()">
+      <img class="icon" src="../../assets/new-target.png">
+    </div>
+    <div class="icon-button" (click)="this.onSettings()">
+      <img class="icon" src="../../assets/settings.png">
+    </div>
+    
+  </div>
+
+  <app-ssh-terminal [ngClass]="{'invisible': !this.showSshTerminal}" class="ssh-terminal"
+    (closeEvent)="this.onSshTerminal()"></app-ssh-terminal>
+</div>
