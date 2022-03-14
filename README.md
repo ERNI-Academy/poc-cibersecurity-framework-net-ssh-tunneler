@@ -11,8 +11,8 @@ Built With
 
 Features
 
-    Make things faster
-    Store Knowledge.
+    SSH Console.
+    Network Map & Network discovery.
     Automatize processes.
 
 Getting Started
