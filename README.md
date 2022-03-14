@@ -19,10 +19,11 @@ Getting Started
 
 Installation instructions SSH Tunneler by running:
 
-    Clone the repo
-
-    git clone https://github.com/ERNI-Academy/Poc-Cibersecurity-Framework-NetSSHTunneler.git
-
+    Download the latest release (https://github.com/ERNI-Academy/Poc-Cibersecurity-Framework-NetSSHTunneler/releases/tag/v1.0.0.1)
+    Uncompress
+    Run NetSSHTunneler.App.exe
+    Open your browser to http://localhost:5070
+    Enjoy!!
 
 
 License
