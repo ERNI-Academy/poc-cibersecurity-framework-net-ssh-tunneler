@@ -1,50 +1,39 @@
 About SSHTunneler
 
-ERNI Academy StarterKit, PoC, or Gidelines. This is an about description of your repository.
+SSH Tunneler is a proof of concept of a framework to automatize pentesting duties once a computer is compromised and SSH access is gained.
+It allow the user to store, plan and execute command sequences and get the results as evidences.
+
 Built With
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-    Tools A
-    Framework B
-    Project C
+    .NET 5.0
+    AngularJS
+    Renci SSH.NET
 
 Features
 
-    Be awesome
     Make things faster
+    Store Knowledge.
+    Automatize processes.
 
 Getting Started
 
-This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
-Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-Installation
-
-Installation instructions {{ Name }} by running:
+Installation instructions SSH Tunneler by running:
 
     Clone the repo
 
-    git clone https://github.com/ERNI-Academy/Project-Name.git
+    git clone https://github.com/ERNI-Academy/Poc-Cibersecurity-Framework-NetSSHTunneler.git
 
-    Install packages
 
-    npm install
-
-    Configure
-
-    const API_KEY = 'ENTER YOUR API';
 
 License
 
-MIT © {{ Year }} ERNI - Swiss Software Engineering
+MIT © 2022 ERNI - Swiss Software Engineering
 
 Contact:
 
-{{ Your Name}} - @your_twitter - your_mail @example.com
+David Soto Dalmau - @JDarknessf - jdarkness@protonmail.com
 Contributors ✨
 
-Thanks goes to these wonderful people (emoji key):
+Thanks goes to these wonderful people (emoji key): Samuel Hernandez
 
 This project follows the all-contributors specification. Contributions of any kind welcome!
