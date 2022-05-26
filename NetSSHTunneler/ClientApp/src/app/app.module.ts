@@ -40,60 +40,56 @@ import { RunDiscoveryComponent } from './run-discovery/run-discovery.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    ConnectionFormComponent,
-    DialogSimpleMessage,
-    LoadDiscoveryConfigurationDialog,
-    DashboardComponent,
-    SshTerminalComponent,
-    DiscoveryComponent,
-    NetworkMapComponent,
-    SettingsScreenComponent,
-    RunDiscoveryComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: DashboardComponent, pathMatch: 'full' },
-      { path: 'discovery', component: DiscoveryComponent },
-      { path: 'network', component: NetworkMapComponent },
-      { path: 'settings', component: SettingsScreenComponent },
-      { path: 'run', component: RunDiscoveryComponent },
-      { path: 'new', component: ConnectionFormComponent },
-    ]),
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    DragDropModule,
-    MatProgressBarModule,
-    MatTreeModule,
-    MatSlideToggleModule,
-    MatRadioModule,
-    MatSnackBarModule,
-    MatTooltipModule
-  ],
-  providers: [
-    HomeServiceApi,
-    CommandServiceApi,
-    NetworkServiceApi,
-    CommonService,
-    { provide: "API_BASE_URL", useValue: environment.apiRoot }
-  ],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    DialogSimpleMessage,
-    LoadDiscoveryConfigurationDialog
-  ]
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        HomeComponent,
+        CounterComponent,
+        ConnectionFormComponent,
+        DialogSimpleMessage,
+        LoadDiscoveryConfigurationDialog,
+        DashboardComponent,
+        SshTerminalComponent,
+        DiscoveryComponent,
+        NetworkMapComponent,
+        SettingsScreenComponent,
+        RunDiscoveryComponent
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        HttpClientModule,
+        FormsModule,
+        RouterModule.forRoot([
+            { path: '', component: DashboardComponent, pathMatch: 'full' },
+            { path: 'discovery', component: DiscoveryComponent },
+            { path: 'network', component: NetworkMapComponent },
+            { path: 'settings', component: SettingsScreenComponent },
+            { path: 'run', component: RunDiscoveryComponent },
+            { path: 'new', component: ConnectionFormComponent },
+        ]),
+        BrowserAnimationsModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        DragDropModule,
+        MatProgressBarModule,
+        MatTreeModule,
+        MatSlideToggleModule,
+        MatRadioModule,
+        MatSnackBarModule,
+        MatTooltipModule
+    ],
+    providers: [
+        HomeServiceApi,
+        CommandServiceApi,
+        NetworkServiceApi,
+        CommonService,
+        { provide: "API_BASE_URL", useValue: environment.apiRoot }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
