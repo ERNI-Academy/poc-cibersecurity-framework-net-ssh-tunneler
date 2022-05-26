@@ -25,6 +25,8 @@ Installation instructions SSH Tunneler by running:
     Open your browser to http://localhost:5070
     Enjoy!!
 
+For detailed explanations please read the SSHTunneler.docx...
+
 
 License
 
