@@ -9,7 +9,7 @@ import { TargetDto } from '../models/responses/TargetDto.model';
 import { ConectionInfo, HostInfo } from '../models/responses/HostInfo.model';
 import { GeneralConfiguration } from '../models/responses/GeneralConfiguration.model';
 import { DiscoveryConfiguration } from '../models/models/DiscoveryConfiguration.model';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommandServiceApi } from '../api/command.api';
 import { ProcessDiscoveryDto } from '../models/dtos/ProcessDiscoveryDto.model';
 import { DiscoveryResults } from '../models/responses/DiscoveryResponse.model';

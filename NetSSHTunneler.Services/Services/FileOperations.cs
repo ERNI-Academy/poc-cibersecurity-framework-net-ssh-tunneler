@@ -188,6 +188,22 @@ namespace NetSSHTunneler.Services.Services
                     });
                     result.Add(folder);
                 });
+                directory.GetFiles().ToList().ForEach(file =>
+                {
+                    var folder = new DiscoveryScriptFolder
+                    {
+                        Name = directory.Name,
+                        Scripts = new List<DiscoveryScriptFile>()
+                    };
+                    var scriptFile = new DiscoveryScriptFile
+                    {
+                        Name = file.Name,
+                        Path = file.FullName,
+                        Content = JsonSerializer.Deserialize<CommandContainer>(this.ReadFile(file.Name, folderName))
+                    };
+                    folder.Scripts.Add(scriptFile);
+                    result.Add(folder);
+                });
                 return result;
             }
             catch (Exception)

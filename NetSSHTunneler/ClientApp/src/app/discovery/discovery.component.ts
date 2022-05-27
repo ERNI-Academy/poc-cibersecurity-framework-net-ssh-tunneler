@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CommandServiceApi } from '../api/command.api';
 import { NetworkServiceApi } from '../api/network.api';

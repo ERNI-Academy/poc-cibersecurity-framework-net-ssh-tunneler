@@ -7,7 +7,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { CommonService } from '../api/common.service';
 import { TargetDto } from '../models/responses/TargetDto.model';
 import { ConectionInfo, HostInfo } from '../models/responses/HostInfo.model';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommandServiceApi } from '../api/command.api';
 import { PortRedirectionCommandDto } from '../models/dtos/PortRedirectionCommandDto.model';
 

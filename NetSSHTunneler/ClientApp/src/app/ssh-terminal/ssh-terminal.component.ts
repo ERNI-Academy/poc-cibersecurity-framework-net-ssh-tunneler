@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CommandServiceApi } from '../api/command.api';
 import { CommonService } from '../api/common.service';
@@ -14,7 +14,7 @@ export class SshTerminalComponent implements OnInit {
   @Output()
   public closeEvent = new EventEmitter<boolean>();
   public responses: TerminalFlow[];
-  @ViewChild('command', null) myDiv: ElementRef;
+  @ViewChild('command') myDiv: ElementRef;
   dragPosition = { x: 0, y: 0 };
   public path: string;
   constructor(private commandApi: CommandServiceApi, public dialog: MatDialog, private commonService: CommonService) {
