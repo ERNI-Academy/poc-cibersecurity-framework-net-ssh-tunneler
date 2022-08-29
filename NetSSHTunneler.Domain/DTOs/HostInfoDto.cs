@@ -11,6 +11,7 @@ namespace NetSSHTunneler.Domain.DTOs
         public HostInfoDto()
         {
             conectionInfo = new SshConnectionDto();
+            
         }
     }
 }
