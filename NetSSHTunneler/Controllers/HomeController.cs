@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using NetSSHTunneler.Domain.DTOs;
 using NetSSHTunneler.Domain.Responses;
 using NetSSHTunneler.Services.Interfaces;
+using System;
 using System.Text.Json;
 
 namespace NetSSHTunneler.Controllers
@@ -22,9 +23,20 @@ namespace NetSSHTunneler.Controllers
         }
 
         [HttpPost("checkconnection")]
-        public ConnectionStatusResponse CheckConnection([FromBody] SshConnectionDto sshConnection)
+        public ActionResult<ConnectionStatusResponse> CheckConnection([FromBody] SshConnectionDto sshConnection)
         {
             _logger.LogTrace("[SshController][CheckConnection] API called");
+
+            if (sshConnection == null)
+            {
+                return new ObjectResult(new ProblemDetails { Status = 412, Title = "Error", Detail = "SSH Connection information no provided." });
+            }
+
+            if (string.IsNullOrEmpty(sshConnection.TargetIp))
+            {
+                return new ObjectResult(new ProblemDetails { Status = 412, Title = "Error", Detail = "Target Ip SSH Connection information no provided." });
+            }
+
             var result = _sshConnector.CheckConnection(sshConnection);
 
             if (result.Status)
@@ -33,23 +45,38 @@ namespace NetSSHTunneler.Controllers
                 _fileOperations.WriteFile("main_target_ip.json", @".\configuration\", JsonSerializer.Serialize(sshConnection));
             }
 
-            return result;
+            return this.Ok(result);
         }
 
         [HttpGet("checkdashboard")]
-        public DashboardStatusResponse CheckDashboard()
+        public ActionResult<DashboardStatusResponse> CheckDashboard()
         {
             _logger.LogTrace("[SshController][CheckDashboard] API called");
-            var result = _fileOperations.ReadFile("main_target_ip.json", @".\configuration\");
-            DashboardStatusResponse dashboardStatusResponse = new(result);
-            return dashboardStatusResponse;
+            try
+            {
+                var result = _fileOperations.ReadFile("main_target_ip.json", @".\configuration\");
+                DashboardStatusResponse dashboardStatusResponse = new(result);
+                return this.Ok(dashboardStatusResponse);
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(new ProblemDetails { Status = 500, Title = "Error reading main_target_ip.json", Detail = ex.ToString() });
+            }
         }
 
         [HttpDelete("deletedashboard")]
-        public void DeleteDashboardConfig()
+        public ActionResult DeleteDashboardConfig()
         {
             _logger.LogTrace("[SshController][CheckDashboard] API called");
-            _fileOperations.DeleteFile("main_target_ip.json");
+            try
+            {
+                _fileOperations.DeleteFile("main_target_ip.json");
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                return new ObjectResult(new ProblemDetails { Status = 500, Title = "Error deleting main_target_ip.json", Detail = ex.ToString() });
+            }
         }
     }
 }
