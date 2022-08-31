@@ -47,17 +47,36 @@ export class NetworkMapComponent implements OnInit {
     this.isSelectedHost = false;
     this.selectedPort = "";
     const target = new TargetDto();
+    target.Base = host.name;
     target.IP = host.name;
     this.selectedHost = await this.networkApi.getTargetIp(target);
     this.isSelectedHost = true;
     this.isSelectedPort = false;
-    if (this.selectedHost.conectionInfo.targetIp && this.selectedHost.conectionInfo.targetIp !== "") {
-      this.commonService.SendCustomEvent(host.name);
+   
+  }
+  async selectBase(host: NetWorkPrint) {
+    this.isSelectedHost = false;
+    this.selectedPort = "";
+    const target = new TargetDto();
+    target.Base = host.name;
+    this.isSelectedPort = false;
+    if (target.Base && target.Base !== "") {
+      this.commonService.SendBaseEvent(host.name);
     } else {
-      this.commonService.SendCustomEvent("Pending configuration");
+      this.commonService.SendBaseEvent("Pending configuration");
     }
   }
-
+  async selectTarget(host: NetWorkPrint) {
+    const target = new TargetDto();
+    target.IP = host.name;
+    this.isSelectedHost = false;
+    this.isSelectedPort = false;
+    if (target.IP && target.IP !== "") {
+      this.commonService.SendTargetEvent(host.name);
+    } else {
+      this.commonService.SendTargetEvent("Pending configuration");
+    }
+  }
   async saveConfiguration() {
     const saved = await this.networkApi.saveTargetConfig(this.selectedHost);
     if (saved) {

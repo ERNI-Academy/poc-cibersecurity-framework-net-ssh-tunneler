@@ -7,11 +7,16 @@ import { NetWorkPrint } from "../models/responses/NetWorkPrint.model";
 })
 export class CommonService {
 
-    @Output() customEvent = new EventEmitter<string>();
+  @Output() setBase = new EventEmitter<string>();
+  @Output() setTarget = new EventEmitter<string>();
     public lastEvent: string;
-    SendCustomEvent(msg: string) {
-        this.customEvent.emit(msg);
+    SendBaseEvent(msg: string) {
+    this.setBase.emit(msg);
         this.lastEvent = msg;
+    }
+    SendTargetEvent(msg: string) {
+      this.setTarget.emit(msg);
+    this.lastEvent = msg;
     }
 
     public PendingTargetIp() {

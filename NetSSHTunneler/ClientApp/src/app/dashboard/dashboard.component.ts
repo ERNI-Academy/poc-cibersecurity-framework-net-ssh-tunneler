@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.commonService.customEvent
+    this.commonService.setTarget
       .subscribe((data: string) => {
         this.targetIp = data;
       });

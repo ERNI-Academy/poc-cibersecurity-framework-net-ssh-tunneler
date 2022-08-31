@@ -1,3 +1,4 @@
 export class TargetDto {
-    IP: string;
+  IP: string;
+  Base: string;
 }

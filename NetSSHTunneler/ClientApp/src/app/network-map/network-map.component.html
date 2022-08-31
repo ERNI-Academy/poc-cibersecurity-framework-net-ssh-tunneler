@@ -29,10 +29,15 @@
             {{node.name}}
           </div>
           <ng-template #noPortnoHostBlock>
-            <div *ngIf="node.type === 1 && node.parent === ''; else noPene" class="host" (click)="selectHost(node)">
-              <img class="icon" src="../../assets/host-icon.png" />
-              {{node.name}}
-            </div>
+              <div [matMenuTriggerFor]="menu" *ngIf="node.type === 1 && node.parent === ''; else noPene" class="host" >
+                <img class="icon" src="../../assets/host-icon.png" />
+                {{node.name}}
+              </div>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="selectBase(node)">Set as base</button>
+                <button mat-menu-item (click)="selectTarget(node)">Set as target</button>
+                <button mat-menu-item (click)="selectHost(node)">Configure</button>
+              </mat-menu>
             <ng-template #noPene>
               {{node.name}}
             </ng-template>
@@ -51,10 +56,15 @@
             Network {{node.name}}
           </div>
           <ng-template #noNetworkBlock>
-            <div class="host" (click)="selectHost(node)">
-              <img class="icon" src="../../assets/host-icon.png" />
-              {{node.name}}
-            </div>
+             <div class="host" [matMenuTriggerFor]="menu">
+                <img class="icon" src="../../assets/host-icon.png" />
+                {{node.name}}
+              </div>
+           <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="selectBase(node)">Set as base</button>
+              <button mat-menu-item (click)="selectTarget(node)">Set as target</button>
+              <button mat-menu-item (click)="selectHost(node)">Configure</button>
+            </mat-menu>
           </ng-template>
         </div>
         <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
