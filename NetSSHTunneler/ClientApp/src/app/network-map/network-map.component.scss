@@ -1,58 +1,74 @@
 #network-map-component {
   color: #41ff00;
   padding-bottom: 32px;
+
   .flex {
     display: flex;
     justify-content: space-between;
+
     .form-box {
       color: #41ff00;
       border: 1px solid #41ff00;
       padding: 8px;
       //background-color: aliceblue;
     }
+
     .save {
       border: #41ff00 1px solid;
+
       &:hover {
         background-color: #41ff00;
         color: black;
       }
     }
+
     .flex {
       display: flex;
       gap: 10px;
+
       &.right {
         justify-content: flex-end;
       }
+
       .flex-big {
         flex-grow: 10;
       }
+
       .flex-small {
         flex-grow: 1;
       }
     }
+
     mat-form-field {
       width: 100%;
     }
+
     ::ng-deep .mat-form-field-label {
       color: #40ff008f;
     }
+
     ::ng-deep .mat-form-field-appearance-standard .mat-form-field-underline {
       background-color: yellow;
     }
+
     ::ng-deep mat-form-field.mat-focused .mat-form-field-label {
       color: yellow;
     }
+
     ::ng-deep mat-form-field.mat-focused .mat-form-field-ripple {
       background-color: yellow;
     }
+
     ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
       background-color: #071525;
     }
   }
+
   .title-top {
     border-bottom: #41ff00 1px dotted;
     margin-bottom: 24px;
     font-size: 24px;
+
     mat-icon {
       color: #41ff00;
       font-size: 20px;
@@ -60,10 +76,12 @@
       cursor: pointer;
     }
   }
+
   .folder {
     background-color: #41ff00;
     color: black;
     margin-bottom: 10px;
+
     .title {
       padding: 8px;
     }
@@ -76,6 +94,7 @@
       cursor: pointer;
     }
   }
+
   .discovery-preview-container {
     width: 40%;
     max-width: 100%;
@@ -83,15 +102,19 @@
     display: inline-block;
     vertical-align: top;
     margin-top: 8px;
+
     .preview-content {
       border: #41ff00 1px dotted;
+
       .title {
         background-color: #41ff00;
         color: black;
         padding: 6px;
       }
+
       .content {
         padding: 6px;
+
         textarea {
           width: 100%;
           background-color: black;
@@ -102,15 +125,18 @@
           resize: none;
         }
       }
+
       .buttons {
         display: flex;
         gap: 12px;
         justify-content: flex-end;
         padding: 6px;
+
         .button {
           cursor: pointer;
           border: #41ff00 1px solid;
           padding: 4px 16px;
+
           &:hover {
             background-color: #41ff00;
             color: black;
@@ -119,6 +145,7 @@
       }
     }
   }
+
   .discovery-drag-container {
     width: 25%;
     max-width: 100%;
@@ -149,6 +176,7 @@
     cursor: move;
     background: black;
     font-size: 14px;
+
     .close {
       color: #41ff00;
       cursor: pointer;
@@ -264,6 +292,20 @@
     padding: 4px 16px;
     &:hover {
       background-color: #41ff00;
+      color: black;
+    }
+  }
+}
+
+::ng-deep .mat-menu-content {
+  background-color: black;
+  border: yellow 2px solid;
+
+  .mat-menu-item {
+    color: yellow;
+
+    &:hover {
+      background-color: yellow;
       color: black;
     }
   }
