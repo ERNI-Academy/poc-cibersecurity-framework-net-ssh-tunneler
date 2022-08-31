@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CommonService } from '../api/common.service';
-import { HomeServiceApi } from '../api/home.api';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +10,7 @@ import { HomeServiceApi } from '../api/home.api';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  public targetIp = this.commonService.lastEvent;
+  public targetIp = this.commonService.lastBase;
   public showSshTerminal: boolean;
   constructor(public dialog: MatDialog, private router: Router, private commonService: CommonService, private _snackBar: MatSnackBar) {
     this.showSshTerminal = false;

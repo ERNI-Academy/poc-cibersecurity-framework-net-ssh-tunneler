@@ -107,7 +107,7 @@ export class NetworkMapComponent implements OnInit {
   async forwardPort(portNode: NetWorkPrint) {
     if (!this.commonService.PendingTargetIp()) {
       const portRedirection = new PortRedirectionCommandDto();
-      portRedirection.TargetIP = this.commonService.lastEvent;
+      portRedirection.TargetIP = this.commonService.lastBase;
       portRedirection.destinationIp = this.destinationHost;
       portRedirection.destinationPort = this.destinationPort;
       portRedirection.originIp = portNode.parent;

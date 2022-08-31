@@ -31,6 +31,7 @@ namespace NetSSHTunneler.Controllers
             if (!string.IsNullOrEmpty(json))
             {
                 var sshConnectionDto = JsonSerializer.Deserialize<HostInfoDto>(json);
+                sshConnectionDto.conectionInfo.AttackedIp = Command.AttackedIp;
                 CommandContainer newCommand = new CommandContainer();
                 newCommand.Commands.Add(Command.Command);
                 newCommand.CommandConfig.Timeout = 20000;
@@ -47,6 +48,7 @@ namespace NetSSHTunneler.Controllers
             _logger.LogTrace("[CommandController][ProcessDiscovery] API called");
             var json = _fileOperations.FindAndReadConfigFile(Files.TargetIp);
             var sshConnectionDto = JsonSerializer.Deserialize<HostInfoDto>(json);
+            sshConnectionDto.conectionInfo.AttackedIp = Files.AttackedIp;
             DiscoveryResults result = _sshConnector.ProcessDiscovery(sshConnectionDto.conectionInfo, Files.commands);
             return result;
         }
