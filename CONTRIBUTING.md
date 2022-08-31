@@ -1,53 +1,18 @@
-[code_of_conduct]: CODE_OF_CONDUCT.md
-[repo_from_template]: https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template
+[code_of_conduct]: ./CODE_OF_CONDUCT.md
 [fork]: https://docs.github.com/en/github/getting-started-with-github/fork-a-repo
 [clone]: https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository
 [push]: https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/merging-an-upstream-repository-into-your-fork
 [pull]: https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork
-[template]: https://github.com/rgonzalezabreu/erni-academy-template
 
-- [Getting started](#getting-started)
-- [1. How to become a contributor](#1-how-to-become-a-contributor)
-- [2. How to create a resource](#2-how-to-create-a-resource)
-- [3. How to contribute](#3-how-to-contribute)
+# Contributing
 
-# Getting started
+This document is a set of guidelines for contributing to this repository.
 
-Please note that this project is released with a Contributor [Code of Conduct][code_of_conduct]. By participating in this project you agree to abide by its terms.
+## Code of Conduct
 
-All contributions, however small are valued!
+This project follows a [Code of Conduct][code_of_conduct] in order to ensure an open and welcoming environment.
 
-If you have an idea to share in the form of Proof of concept, Starterkit or Guideline become a contributor and collaborate with us.
-
-# 1. How to become a contributor
-Before starting you must be a ERNI contributor. 
-
-Please send us an email to this account so we can add you to our contributors list.
-
-esp-services@erni-espana.es
-
-# 2. How to create a resource
-Create your reposoitory from ERNI Academy Template:
-
-Use this guide [Creating a repository from a template][repo_from_template] to create your repository from ["erni-academy-template"][template].
-
-Please, pay attention to the new repository name and follow this simple schema:
-
-**{type}-{learningPath}-{description}**
-
-| Type       | desc             |
-|------------|------------------|
-| poc        | proof of concept |
-| starterkit | Starter Kit      |
-| guideline  | Guideline        |
-
-**Examples:**
-- poc-frontend-start-with-angular
-- starterkit-backend-net-api
-- guideline-devops-pipelines
-
-# 3. How to contribute
-Whether you want to contribute to your new repository or you want to update ERNI awesome resource list the process is the same:
+## How to submit changes
 
 1. [**Fork the repository**][fork] to your personal Github. Forking is basically an easy way to make a duplicate of the repository to your own account.
 2. [**Clone**][clone] the project to your own machine.
