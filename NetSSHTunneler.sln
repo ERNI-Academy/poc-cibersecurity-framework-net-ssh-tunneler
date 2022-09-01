@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1A2D231D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSSHTunneler.App.Tests", "NetSSHTunneler.App.Tests\NetSSHTunneler.App.Tests.csproj", "{E1F3122D-2C9A-4D1D-BF6F-2C5427CCFB46}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSSHTunneler.Utils.Tests", "..\fork-ssh-tunneler\NetSSHTunneler.Utils.Tests\NetSSHTunneler.Utils.Tests.csproj", "{6F5A0A09-380E-49A9-88B5-A74DD477BF0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSSHTunneler.Utils.Tests", "NetSSHTunneler.Utils.Tests\NetSSHTunneler.Utils.Tests.csproj", "{6F5A0A09-380E-49A9-88B5-A74DD477BF0C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
