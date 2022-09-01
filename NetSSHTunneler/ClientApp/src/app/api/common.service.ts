@@ -1,6 +1,4 @@
-import { HttpClient } from "@angular/common/http";
-import { EventEmitter, Inject, Injectable, Output } from "@angular/core";
-import { NetWorkPrint } from "../models/responses/NetWorkPrint.model";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 
 @Injectable({
   providedIn: "root"

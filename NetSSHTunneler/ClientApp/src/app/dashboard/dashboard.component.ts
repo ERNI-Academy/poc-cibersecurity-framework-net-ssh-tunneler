@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CommonService } from '../api/common.service';
+import { DashboardDataService } from './dashboard.service';
+import { DashboardDataApp } from '../models/models/DashboardData.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +14,10 @@ import { CommonService } from '../api/common.service';
 export class DashboardComponent implements OnInit {
   public targetIp = this.commonService.lastBase;
   public showSshTerminal: boolean;
-  constructor(public dialog: MatDialog, private router: Router, private commonService: CommonService, private _snackBar: MatSnackBar) {
+
+  public sections = this.dashaboarData.getDashboardData();
+
+  constructor(public dialog: MatDialog, private router: Router, private commonService: CommonService, private _snackBar: MatSnackBar, private dashaboarData: DashboardDataService) {
     this.showSshTerminal = false;
   }
 
@@ -23,17 +28,24 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  public onSshTerminal() {
-    if (this.commonService.PendingTargetIp()) {
+  public onShowSshTerminal() {
+    this.showSshTerminal = !this.showSshTerminal;
+  }
+
+  public onOpenApp(app: DashboardDataApp) {
+    if (app.targetNeeded && this.commonService.PendingTargetIp()) {
       this.applicationCanNoBeDisplayed();
-    } else {
-      this.showSshTerminal = !this.showSshTerminal;
+    } else if (app.name === "SSH") {
+      this.onShowSshTerminal();
+    }
+    else {
+      this.router.navigate([app.url]);
     }
   }
 
   private applicationCanNoBeDisplayed() {
     let msg = "No host selected. You must go to Network Map and select one host.";
-    if(this.targetIp == "Pending configuration") {
+    if (this.targetIp == "Pending configuration") {
       msg = "The selected host is not configured! You must go to Network Map and configure it or select another one."
     }
     this._snackBar.open(msg, null, {
@@ -41,29 +53,5 @@ export class DashboardComponent implements OnInit {
       horizontalPosition: "right",
       verticalPosition: "top",
     });
-  }
-
-  public onDiscoveryConfiguration() {
-    this.router.navigate(['/discovery']);
-  }
-
-  public onNetworkMap() {
-    this.router.navigate(['/network']);
-  }
-
-  public onSettings() {
-    this.router.navigate(['/settings']);
-  }
-
-  public onRunDiscovery() {
-    if (this.commonService.PendingTargetIp()) {
-      this.applicationCanNoBeDisplayed();
-    } else {
-      this.router.navigate(['/run']);
-    }
-  }
-
-  public onNewTarget() {
-    this.router.navigate(['/new']);
   }
 }

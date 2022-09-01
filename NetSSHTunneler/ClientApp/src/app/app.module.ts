@@ -40,6 +40,7 @@ import { LoadDiscoveryConfigurationDialog } from './dialogs/discovery-configurat
 import { RunDiscoveryComponent } from './run-discovery/run-discovery.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { DashboardDataService } from './dashboard/dashboard.service';
 
 @NgModule({
     declarations: [
@@ -91,6 +92,7 @@ import { MatMenuModule } from '@angular/material/menu';
         CommandServiceApi,
         NetworkServiceApi,
         CommonService,
+        DashboardDataService,
         { provide: "API_BASE_URL", useValue: environment.apiRoot }
     ],
     bootstrap: [AppComponent]
