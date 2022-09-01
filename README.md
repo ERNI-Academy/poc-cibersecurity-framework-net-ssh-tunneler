@@ -1,6 +1,6 @@
 # About SSHTunneler
 
-SSH Tunneler is a proof of concept of a framework to automatize pentesting duties once a computer is compromised and SSH access is gained.
+SSH Tunneler is a proof of concept of a framework to automatize pentesting duties thorugh a computer with SSH access.
 It allow the user to store, plan and execute command sequences and get the results as evidences.
 
 ## Built With
