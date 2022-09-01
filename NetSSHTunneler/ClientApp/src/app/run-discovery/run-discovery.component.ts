@@ -49,7 +49,7 @@ export class RunDiscoveryComponent implements OnInit {
   async onLaunch() {
     if (this.commonService.PendingTargetIp()) {
       let msg = "No host selected. You must go to Network Map and select one host.";
-      if (this.commonService.lastEvent == "Pending configuration") {
+      if (this.commonService.lastBase == "Pending configuration") {
         msg = "The selected host is not configured! You must go to Network Map and configure it or select another one."
       }
       this._snackBar.open(msg, null, {
@@ -63,7 +63,15 @@ export class RunDiscoveryComponent implements OnInit {
         this.loadingMsg = "Executing actions. Please wait until complete to see the report..."
         this.loading = true;
         const discoveryDto = new ProcessDiscoveryDto();
-        discoveryDto.TargetIp = this.commonService.lastEvent;
+        if (this.commonService.lastBase && this.commonService.lastBase !== "") {
+          discoveryDto.TargetIp = this.commonService.lastBase;
+        }
+        if (this.commonService.lastTarget && this.commonService.lastTarget !== "") {
+          discoveryDto.AttackedIp = this.commonService.lastTarget;
+        }
+        else {
+          discoveryDto.AttackedIp = this.commonService.lastBase;
+        }
         discoveryDto.commands = new Array<string>();
         this.selectedDiscoveryConfiguration.files.forEach(file => {
           discoveryDto.commands.push(file.path);

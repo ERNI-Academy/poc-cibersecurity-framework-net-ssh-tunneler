@@ -28,6 +28,7 @@ html {
 }
 
 .targetIp {
+  padding-left: 90px;
   color: #41ff00;
   cursor: pointer;
 }

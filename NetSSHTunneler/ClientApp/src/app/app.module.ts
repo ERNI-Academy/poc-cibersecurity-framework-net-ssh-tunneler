@@ -39,6 +39,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoadDiscoveryConfigurationDialog } from './dialogs/discovery-configuration-load/discovery-configuration-load.component';
 import { RunDiscoveryComponent } from './run-discovery/run-discovery.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatSlideToggleModule,
         MatRadioModule,
         MatSnackBarModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatMenuModule
     ],
     providers: [
         HomeServiceApi,

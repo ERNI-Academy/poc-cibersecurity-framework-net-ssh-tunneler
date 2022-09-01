@@ -9,16 +9,22 @@ import { CommonService } from '../api/common.service';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
   targetIp: string;
+  baseIp: string;
 
   constructor(private commonService: CommonService) {
     this.targetIp = "None";
+    this.baseIp = "None";
   }
 
   ngOnInit() {
-    this.commonService.customEvent
+    this.commonService.setBase
     .subscribe((data:string) => {
-      this.targetIp = data;
+      this.baseIp = data;
     });
+    this.commonService.setTarget
+      .subscribe((data: string) => {
+        this.targetIp = data;
+      });
   }
 
   collapse() {

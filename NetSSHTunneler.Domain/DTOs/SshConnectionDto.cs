@@ -4,6 +4,7 @@
     public class SshConnectionDto
     {
         public string TargetIp { get; set; }
+        public string AttackedIp { get; set; }
         public string TargetPort { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }

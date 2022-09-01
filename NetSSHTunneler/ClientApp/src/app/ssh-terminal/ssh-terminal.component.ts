@@ -24,10 +24,16 @@ export class SshTerminalComponent implements OnInit {
   async ngOnInit() {
     this.responses = [];
     this.path = "$";
-    if (this.commonService.lastEvent && this.commonService.lastEvent !== "") {
+    if (this.commonService.lastBase && this.commonService.lastBase !== "") {
       const initialCommand = new CommandDto();
       initialCommand.Command = "echo Sesión iniciada";
-      initialCommand.TargetIp = this.commonService.lastEvent;
+      initialCommand.TargetIp = this.commonService.lastBase;
+      if (this.commonService.lastTarget && this.commonService.lastTarget !== "") {
+        initialCommand.AttackedIp = this.commonService.lastTarget;
+      }
+      else {
+        initialCommand.AttackedIp = this.commonService.lastBase;
+      }
       const response = await this.commandApi.sendCommand(initialCommand);
       const newTerminalFlow = new TerminalFlow();
       newTerminalFlow.results = [];
@@ -58,7 +64,8 @@ export class SshTerminalComponent implements OnInit {
     } else {
       const commandToSend = new CommandDto();
       commandToSend.Command = command;
-      commandToSend.TargetIp =  this.commonService.lastEvent;
+      commandToSend.TargetIp = this.commonService.lastBase;
+      commandToSend.AttackedIp = this.commonService.lastTarget;
       const response = await this.commandApi.sendCommand(commandToSend);
       const newTerminalFlow = new TerminalFlow();
       newTerminalFlow.results = [];

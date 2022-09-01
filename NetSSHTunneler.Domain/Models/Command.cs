@@ -14,6 +14,7 @@ namespace NetSSHTunneler.Services.Models
         public CommandContainer()
         {
             Commands = new List<string>();
+            CommandConfig = new CommandConfig();
         }
     }
     public class CommandConfig
