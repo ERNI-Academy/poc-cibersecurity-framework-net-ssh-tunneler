@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\fork-ssh-tunneler\NetSSHTunneler.Utils.Tests\NetSSHTunneler.Utils.Tests.csproj" />
+    <ProjectReference Include="..\NetSSHTunneler.Utils.Tests\NetSSHTunneler.Utils.Tests.csproj" />
     <ProjectReference Include="..\NetSSHTunneler\NetSSHTunneler.App.csproj" />
   </ItemGroup>
 
