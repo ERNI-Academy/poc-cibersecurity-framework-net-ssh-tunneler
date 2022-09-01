@@ -343,3 +343,4 @@ healthchecksdb
 /NetSSHTunneler/discovery
 /NetSSHTunneler/configuration
 /NetSSHTunneler/hosts
+/NetSSHTunneler/ClientApp/.angular/cache/14.2.1
