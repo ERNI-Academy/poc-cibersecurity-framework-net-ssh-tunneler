@@ -287,7 +287,7 @@ namespace NetSSHTunneler.Services.Services
                 ConnectionInfo ConnectionParams = null;
                 if (!SSHConnections.ContainsKey(sshConnection.TargetIp + ":" + intPort))
                 {
-                    if (sshConnection.Certificate != "")
+                    if (!string.IsNullOrEmpty(sshConnection.Certificate))
                     {
                         file = new PrivateKeyFile(@".\certificates\" + sshConnection.Certificate, sshConnection.Password);
                         ConnectionParams = new ConnectionInfo(sshConnection.TargetIp, intPort, sshConnection.UserName, new AuthenticationMethod[] { new PrivateKeyAuthenticationMethod(sshConnection.UserName, file) });
@@ -335,14 +335,21 @@ namespace NetSSHTunneler.Services.Services
                     try
                     {
                         var basura = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
-                        Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine(command.Commands[0].Replace('\n', ' '));
+                        Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine(command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp));
                         
-                        var result = Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
-                        result = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+                        var result = Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$|\~"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
+                        var oldresult = "";
+                        while (oldresult!=result)
+                        {
+                            oldresult = result;
+                            result+= Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+                            
+                        }
+                       // result = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
                         Thread.Sleep(500);
                         if (command.Commands[0].Count(f=>f=='$')>0)
                         {
-                            result += Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
+                            result += Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$|\~"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
                             Consoles[sshConnection.TargetIp + ":" + intPort].Read();
                         }
                         var tempresult = "new";
@@ -351,7 +358,7 @@ namespace NetSSHTunneler.Services.Services
                             tempresult = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
                             result += tempresult;
                         }
-                        if (result!=null && result.Contains(command.Commands[0].Replace('\n', ' ')))
+                        if (result!=null && result.Contains(command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp)))
                         {
                             result=result.Replace(command.Commands[0], "");
                         }

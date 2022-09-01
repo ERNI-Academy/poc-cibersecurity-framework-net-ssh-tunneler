@@ -9,5 +9,6 @@ namespace NetSSHTunneler.Domain.DTOs
     public class TargetDto
     {
         public string IP { get; set; }
+        public string Base { get; set; }
     }
 }
