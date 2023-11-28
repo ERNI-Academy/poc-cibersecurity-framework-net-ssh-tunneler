@@ -4,6 +4,9 @@ import { CommandServiceApi } from '../api/command.api';
 import { CommonService } from '../api/common.service';
 import { CommandDto } from '../models/dtos/CommandDto.model';
 import { TerminalFlow, TerminalFlowType } from '../models/models/TerminalFlow.model';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import * as signalR from '@microsoft/signalr';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-ssh-terminal',
@@ -17,8 +20,17 @@ export class SshTerminalComponent implements OnInit {
   @ViewChild('command') myDiv: ElementRef;
   dragPosition = { x: 0, y: 0 };
   public path: string;
-  constructor(private commandApi: CommandServiceApi, public dialog: MatDialog, private commonService: CommonService) {
+  private connection: HubConnection;
+
+  constructor(private commandApi: CommandServiceApi, public dialog: MatDialog, private commonService: CommonService, private _snackBar: MatSnackBar) {
     this.dragPosition = { x: -0, y: -200 };
+    console.log("Connecting to events hub");
+    this.connection = new HubConnectionBuilder()
+      .configureLogging(signalR.LogLevel.Debug)
+      .withUrl(`http://localhost:5070/events`)
+      .build();
+
+    this.connection.on("NewUser", message => this._snackBar.open(message, null));
   }
 
   async ngOnInit() {
@@ -49,6 +61,13 @@ export class SshTerminalComponent implements OnInit {
       }
       this.responses.push(newTerminalFlow);
     }
+
+    this.connection.start()
+      .then(_ => {
+        console.log('Connection Started');
+      }).catch(error => {
+        return console.error(error);
+      });
   }
 
   async sendCommand() {

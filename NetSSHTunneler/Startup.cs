@@ -1,88 +1,96 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using NetSSHTunneler.Services.Interfaces;
-using NetSSHTunneler.Services.Services;
+//using Microsoft.AspNetCore.Builder;
+//using Microsoft.AspNetCore.Hosting;
+//using Microsoft.AspNetCore.HttpsPolicy;
+//using Microsoft.AspNetCore.SpaServices.AngularCli;
+//using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.DependencyInjection;
+//using Microsoft.Extensions.Hosting;
+//using NetSSHTunneler.Services;
+//using NetSSHTunneler.Services.Interfaces;
+//using NetSSHTunneler.Services.Services;
 
-namespace NetSSHTunneler
-{
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+//namespace NetSSHTunneler
+//{
+//    public class Startup
+//    {
+//        public Startup(IConfiguration configuration)
+//        {
+//            Configuration = configuration;
+//        }
 
-        public IConfiguration Configuration { get; }
+//        public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                       .AllowAnyMethod()
-                       .AllowAnyHeader();
-            }));
-            services.AddControllersWithViews();
-            services.AddSingleton<ISshConnector, SshConnector>();
-            services.AddSingleton<IFileOperations, FileOperations>();
-            services.AddSingleton<INetworkOperations, NetworkOperations>();
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
-        }
+//        // This method gets called by the runtime. Use this method to add services to the container.
+//        public void ConfigureServices(IServiceCollection services)
+//        {
+//            services.AddSignalR();
+//            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+//            {
+//                builder.AllowAnyOrigin()
+//                       .AllowAnyMethod()
+//                       .AllowAnyHeader()
+//                       .WithOrigins("https://localhost:7090", "https://localhost:44429");
+//            }));
+//            services.AddControllersWithViews();
+//            services.AddSingleton<ISshConnector, SshConnector>();
+//            services.AddSingleton<IFileOperations, FileOperations>();
+//            services.AddSingleton<INetworkOperations, NetworkOperations>();
+//            // In production, the Angular files will be served from this directory
+//            //services.AddSpaStaticFiles(configuration =>
+//            //{
+//            //    configuration.RootPath = "ClientApp/dist";
+//            //});
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            app.UseCors("MyPolicy");
+//        }
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+//        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+//        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+//        {
+//            app.UseCors("MyPolicy");
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
+//            if (env.IsDevelopment())
+//            {
+//                app.UseDeveloperExceptionPage();
+//            }
+//            else
+//            {
+//                app.UseExceptionHandler("/Error");
+//                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//                app.UseHsts();
+//            }
 
-            app.UseRouting();
+//            app.UseHttpsRedirection();
+//            app.UseStaticFiles();
+//            if (!env.IsDevelopment())
+//            {
+//                app.UseSpaStaticFiles();
+//            }
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
+//            app.UseRouting();
 
-            app.UseSpa(spa =>
-            {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
+//            app.UseEndpoints(endpoints =>
+//            {
+//                endpoints.MapControllerRoute(
+//                    name: "default",
+//                    pattern: "{controller}/{action=Index}/{id?}");
+//            });
 
-                spa.Options.SourcePath = "ClientApp";
+//            app.MapHub<ChatHub>("/events");
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
-            });
-        }
-    }
-}
+
+//            app.UseSpa(spa =>
+//            {
+//                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+//                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+//                spa.Options.SourcePath = "ClientApp";
+
+//                if (env.IsDevelopment())
+//                {
+//                    spa.UseAngularCliServer(npmScript: "start");
+//                }
+//            });
+
+//        }
+//    }
+//}

@@ -12,6 +12,7 @@ import { CommonService } from '../api/common.service';
 export class DashboardComponent implements OnInit {
   public targetIp = this.commonService.lastBase;
   public showSshTerminal: boolean;
+  
   constructor(public dialog: MatDialog, private router: Router, private commonService: CommonService, private _snackBar: MatSnackBar) {
     this.showSshTerminal = false;
   }
