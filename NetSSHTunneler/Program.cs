@@ -16,6 +16,8 @@ builder.Host.ConfigureServices((hostBuilderContext, services) =>
     services.AddSingleton<ISshConnector, SshConnector>();
     services.AddSingleton<IFileOperations, FileOperations>();
     services.AddSingleton<INetworkOperations, NetworkOperations>();
+    services.AddSingleton<IChatHub, ChatHub>();
+    services.AddSingleton<IEventService, EventService>();
 
 });
 

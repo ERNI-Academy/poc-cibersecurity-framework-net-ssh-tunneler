@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using NetSSHTunneler.Domain.DTOs;
 using NetSSHTunneler.Domain.Responses;
+using NetSSHTunneler.Services;
 using NetSSHTunneler.Services.Interfaces;
 using System;
 using System.Text.Json;
@@ -15,11 +16,13 @@ namespace NetSSHTunneler.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ISshConnector _sshConnector;
         private readonly IFileOperations _fileOperations;
-        public HomeController(ILogger<HomeController> logger, ISshConnector sshConnector, IFileOperations fileOperations)
+        private readonly IEventService _chatHub;
+        public HomeController(ILogger<HomeController> logger, ISshConnector sshConnector, IFileOperations fileOperations, IEventService chatHub)
         {
             _logger = logger;
             _sshConnector = sshConnector;
             _fileOperations = fileOperations;
+            _chatHub = chatHub;
         }
 
         [HttpPost("checkconnection")]
@@ -77,6 +80,13 @@ namespace NetSSHTunneler.Controllers
             {
                 return new ObjectResult(new ProblemDetails { Status = 500, Title = "Error deleting main_target_ip.json", Detail = ex.ToString() });
             }
+        }
+
+        [HttpGet("send")]
+        public ActionResult SendMessage([FromQuery] string message)
+        {
+           _chatHub.SendMessage(new NewMessage("test", message, "Events"));
+            return this.Ok();
         }
     }
 }

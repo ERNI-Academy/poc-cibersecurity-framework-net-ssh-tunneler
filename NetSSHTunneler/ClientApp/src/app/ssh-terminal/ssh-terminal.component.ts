@@ -22,6 +22,15 @@ export class SshTerminalComponent implements OnInit {
   public path: string;
   private connection: HubConnection;
 
+  public userName = 'Pepe';
+  public groupName = 'Events';
+  public messageToSend = '';
+  public joined = false;
+  public conversation: NewMessage[] = [{
+    message: 'Bienvenido',
+    userName: 'Sistema'
+  }];
+
   constructor(private commandApi: CommandServiceApi, public dialog: MatDialog, private commonService: CommonService, private _snackBar: MatSnackBar) {
     this.dragPosition = { x: -0, y: -200 };
     console.log("Connecting to events hub");
@@ -30,7 +39,9 @@ export class SshTerminalComponent implements OnInit {
       .withUrl(`http://localhost:5070/events`)
       .build();
 
-    this.connection.on("NewUser", message => this._snackBar.open(message, null));
+      this.connection.on("NewUser", message => this.newUser(message));
+      this.connection.on("NewMessage", message => this.newMessage(message));
+      this.connection.on("LeftUser", message => this.leftUser(message));
   }
 
   async ngOnInit() {
@@ -65,9 +76,39 @@ export class SshTerminalComponent implements OnInit {
     this.connection.start()
       .then(_ => {
         console.log('Connection Started');
+        this.join();
       }).catch(error => {
         return console.error(error);
       });
+  }
+
+  public join() {
+    this.connection.invoke('JoinGroup', this.groupName, this.userName)
+      .then(_ => {
+        this.joined = true;
+      });
+  }
+
+  private newUser(message: string) {
+    console.log(message);
+    this.conversation.push({
+      userName: 'Sistema',
+      message: message
+    });
+  }
+
+  private newMessage(message: NewMessage) {
+    console.log(message);
+    this._snackBar.open(message.message, null);
+    this.conversation.push(message);
+  }
+
+  private leftUser(message: string) {
+    console.log(message);
+    this.conversation.push({
+      userName: 'Sistema',
+      message: message
+    });
   }
 
   async sendCommand() {
@@ -106,4 +147,11 @@ export class SshTerminalComponent implements OnInit {
     this.closeEvent.emit(true);
     this.dragPosition = { x: -0, y: -200 };
   }
+}
+
+
+interface NewMessage {
+  userName: string;
+  message: string;
+  groupName?: string;
 }

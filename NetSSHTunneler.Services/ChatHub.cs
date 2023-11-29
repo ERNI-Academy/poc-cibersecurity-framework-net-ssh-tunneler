@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using NetSSHTunneler.Services.Interfaces;
 using System.Threading.Tasks;
 
 namespace NetSSHTunneler.Services
 {
-    public class ChatHub : Hub
+    public class ChatHub : Hub, IChatHub
     {
         public async Task JoinGroup(string groupName, string userName)
         {
