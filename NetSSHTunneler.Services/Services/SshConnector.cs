@@ -466,7 +466,7 @@ namespace NetSSHTunneler.Services.Services
 
         private string GetPath(SshConnectionDto sshConnection, int intPort)
         {
-            Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+            /*Consoles[sshConnection.TargetIp + ":" + intPort].Read();
             Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine("pwd");
             var result = Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$"), TimeSpan.FromMilliseconds(10));
             Consoles[sshConnection.TargetIp + ":" + intPort].Read();
@@ -482,8 +482,8 @@ namespace NetSSHTunneler.Services.Services
                     return pathArray[1] + "$";
                 }
             }
-            else { return "$"; }
-            return "$";
+            else { return "$"; }*/
+            return ">";
         }
         private bool IsError(string message)
         {
