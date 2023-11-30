@@ -8,9 +8,12 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
 using NetSSHTunneler.Services.Models;
+using NetSSHTunneler.Services;
 using System.Text.Json;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
 
 namespace NetSSHTunneler.Services.Services
 {
@@ -20,6 +23,12 @@ namespace NetSSHTunneler.Services.Services
         public static Dictionary<string, ScpClient> SCPConnections = new Dictionary<string, ScpClient>();
         public static Dictionary<string, SshClient> ForwardedPorts = new Dictionary<string, SshClient>();
         public static Dictionary<string, ShellStream> Consoles = new Dictionary<string, ShellStream>();
+        public static bool NewCommand;
+        private readonly IEventService _eventService;
+        public SshConnector(IEventService eventContext)
+        {
+            _eventService = eventContext;
+        }
         public ConnectionStatusResponse CheckConnection(SshConnectionDto sshConnection)
         {
             SshClient client = null;
@@ -82,41 +91,41 @@ namespace NetSSHTunneler.Services.Services
         }
         public DiscoveryResults ProcessDiscovery(SshConnectionDto sshConnection, List<string> files)
         {
-                DiscoveryResults result =new DiscoveryResults();
-                foreach (string file in files)
+            DiscoveryResults result = new DiscoveryResults();
+            foreach (string file in files)
+            {
+                string content = File.ReadAllText(file);
+                CommandContainer command = JsonSerializer.Deserialize<CommandContainer>(content);
+                if (string.IsNullOrEmpty(command.CommandConfig.Discovery.NetworkCommand))
                 {
-                    string content=File.ReadAllText(file);
-                    CommandContainer command = JsonSerializer.Deserialize<CommandContainer>(content);
-                    if (string.IsNullOrEmpty(command.CommandConfig.Discovery.NetworkCommand))
+                    foreach (string execution in command.Commands)
                     {
-                        foreach (string execution in command.Commands)
-                        {
                         CommandContainer newCommand = new CommandContainer();
                         newCommand.Commands.Add(execution);
                         newCommand.CommandConfig.Timeout = command.CommandConfig.Timeout;
                         var response = SendCommand(sshConnection, newCommand);
-                            result.commandResponses.Add(response);
-                            if (command.CommandConfig.Output.SaveOutput)
-                            {
-                                File.WriteAllLines(command.CommandConfig.Output.Filename, response.Results);
-                            }
-                            if (command.CommandConfig.Crack.DoCrack)
-                            {
-                                Crack(command);
-                            }
+                        result.commandResponses.Add(response);
+                        if (command.CommandConfig.Output.SaveOutput)
+                        {
+                            File.WriteAllLines(command.CommandConfig.Output.Filename, response.Results);
+                        }
+                        if (command.CommandConfig.Crack.DoCrack)
+                        {
+                            Crack(command);
                         }
                     }
-                    else
-                    {
-                        result.commandResponses.AddRange(discoverNetwork(command, sshConnection).commandResponses);
-                     }
                 }
+                else
+                {
+                    result.commandResponses.AddRange(discoverNetwork(command, sshConnection).commandResponses);
+                }
+            }
             return result;
         }
 
         private void Crack(CommandContainer command)
         {
-            var configuration= GetGlobalConfig();
+            var configuration = GetGlobalConfig();
             string hashtype = "500";
             string attackmode = "3";
             string dictionary = "";
@@ -130,16 +139,16 @@ namespace NetSSHTunneler.Services.Services
                 if (!string.IsNullOrEmpty(command.CommandConfig.Crack.Dictionary))
                 {
                     attackmode = "";
-                    dictionary = "--wordlist="+command.CommandConfig.Crack.Dictionary;
+                    dictionary = "--wordlist=" + command.CommandConfig.Crack.Dictionary;
                 }
                 else
                 {
                     attackmode = "--incremental";
                 }
-                
+
                 string modifiers = "";
                 string outputfile = "--pot=" + hashfile;
-                LaunchProcess(hashtype, attackmode, dictionary, hashfile, outputfile,modifiers);
+                LaunchProcess(hashtype, attackmode, dictionary, hashfile, outputfile, modifiers);
             }
             if (configuration.cracker == 1)
             {
@@ -196,11 +205,11 @@ namespace NetSSHTunneler.Services.Services
             result.commandResponses.Add(response);
             foreach (string network in response.Results)
             {
-                result.commandResponses.AddRange(HostScan(command, stream,network).commandResponses);
+                result.commandResponses.AddRange(HostScan(command, stream, network).commandResponses);
             }
             return result;
         }
-       
+
         private DiscoveryResults HostScan(CommandContainer command, SshConnectionDto stream, string network)
         {
             DiscoveryResults result = new DiscoveryResults();
@@ -234,10 +243,10 @@ namespace NetSSHTunneler.Services.Services
                 var response = SendCommand(stream, newCommand);
                 result.commandResponses.Add(response);
                 foreach (string port in response.Results)
-                {   
+                {
                     if (port.Contains("open") && !port.Contains("/"))
                     {
-                        if (hostFile.Ports==null)
+                        if (hostFile.Ports == null)
                         {
                             hostFile.Ports = new List<int>();
                         }
@@ -311,15 +320,28 @@ namespace NetSSHTunneler.Services.Services
                     }
                 }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
             return true;
         }
+        public string ProcessResponse(string connection, CommandContainer command)
+        {
+            var message = "";
+            while (!NewCommand)
+            {
+                message += Consoles[connection].Read();
+                NewMessage newMessage = new NewMessage("kk", message, "kk");
+                _eventService.SendMessage(newMessage);
+
+            }
+            return message;
+        }
         public CommandResponse SendCommand(SshConnectionDto sshConnection, CommandContainer command)
         {
-            var connected=checkOrCreateConnection(sshConnection);
+            NewCommand = true;
+            var connected = checkOrCreateConnection(sshConnection);
             if (connected)
             {
                 int intPort = int.Parse(sshConnection.TargetPort);
@@ -336,39 +358,11 @@ namespace NetSSHTunneler.Services.Services
                     {
                         var basura = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
                         Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine(command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp));
-                        
-                        var result = Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$|\~"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
-                        var oldresult = "";
-                        while (oldresult!=result)
+                        NewCommand = false;
+                        if (command.Interactive)
                         {
-                            oldresult = result;
-                            result+= Consoles[sshConnection.TargetIp + ":" + intPort].Read();
-                            
-                        }
-                       // result = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
-                        Thread.Sleep(500);
-                        if (command.Commands[0].Count(f=>f=='$')>0)
-                        {
-                            result += Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$|\~"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
-                            Consoles[sshConnection.TargetIp + ":" + intPort].Read();
-                        }
-                        var tempresult = "new";
-                        while (!string.IsNullOrEmpty(tempresult))
-                        {
-                            tempresult = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
-                            result += tempresult;
-                        }
-                        if (result!=null && result.Contains(command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp)))
-                        {
-                            result=result.Replace(command.Commands[0], "");
-                        }
-                        if (string.IsNullOrEmpty(result))
-                        {
-                            result = "Not processed or timeout";
-                        }
-                       
-                        if (result != null)
-                        {
+                            var result=ProcessResponse(sshConnection.TargetIp + ":" + intPort, command);
+
                             return new CommandResponse
                             {
                                 Results = result.Trim().Split("\r\n").Where(x => x != "$" && !x.Contains("#")).ToList(),
@@ -379,7 +373,51 @@ namespace NetSSHTunneler.Services.Services
                         }
                         else
                         {
-                            return new CommandResponse { Results = new List<string>() { "No response received" }, Error = true, Path = "$" };
+                            // process response
+                            var result = Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$|\~"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
+                            var oldresult = "";
+                            while (oldresult != result)
+                            {
+                                oldresult = result;
+                                result += Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+
+                            }
+                            // result = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+                            Thread.Sleep(500);
+                            if (command.Commands[0].Count(f => f == '$') > 0)
+                            {
+                                result += Consoles[sshConnection.TargetIp + ":" + intPort].Expect(new Regex(@"\#|\$|\~"), TimeSpan.FromSeconds(command.CommandConfig.Timeout));
+                                Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+                            }
+                            var tempresult = "new";
+                            while (!string.IsNullOrEmpty(tempresult))
+                            {
+                                tempresult = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+                                result += tempresult;
+                            }
+                            if (result != null && result.Contains(command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp)))
+                            {
+                                result = result.Replace(command.Commands[0], "");
+                            }
+                            if (string.IsNullOrEmpty(result))
+                            {
+                                result = "Not processed or timeout";
+                            }
+
+                            if (result != null)
+                            {
+                                return new CommandResponse
+                                {
+                                    Results = result.Trim().Split("\r\n").Where(x => x != "$" && !x.Contains("#")).ToList(),
+                                    Error = this.IsError(result),
+                                    Path = this.GetPath(sshConnection, intPort),
+                                    Command = command.Commands[0].Replace('\n', ' ')
+                                };
+                            }
+                            else
+                            {
+                                return new CommandResponse { Results = new List<string>() { "No response received" }, Error = true, Path = "$" };
+                            }
                         }
                     }
                     catch (Exception)
@@ -388,21 +426,33 @@ namespace NetSSHTunneler.Services.Services
                             SSHConnections[sshConnection.TargetIp + ":" + intPort].Connect();
                         var stream = SSHConnections[sshConnection.TargetIp + ":" + intPort].CreateShellStream("", 80, 24, 800, 600, 1024 * 8);
                         Consoles[sshConnection.TargetIp + ":" + intPort] = stream;
-                        return new CommandResponse { Results = new List<string>() { "Not connected-Reconnected try again" }, Error = true, Path = "$",
+                        return new CommandResponse
+                        {
+                            Results = new List<string>() { "Not connected-Reconnected try again" },
+                            Error = true,
+                            Path = "$",
                             Command = command.Commands[0].Replace('\n', ' ')
                         };
                     }
                 }
                 else
                 {
-                    return new CommandResponse { Results = new List<string>() { "Not connected" }, Error = true, Path = "$",
+                    return new CommandResponse
+                    {
+                        Results = new List<string>() { "Not connected" },
+                        Error = true,
+                        Path = "$",
                         Command = command.Commands[0].Replace('\n', ' ')
                     };
                 }
             }
             else
             {
-                return new CommandResponse{Results = new List<string>() { "Not connected" },Error = true,Path ="X",
+                return new CommandResponse
+                {
+                    Results = new List<string>() { "Not connected" },
+                    Error = true,
+                    Path = "X",
                     Command = command.Commands[0].Replace('\n', ' ')
                 };
             }
@@ -433,7 +483,7 @@ namespace NetSSHTunneler.Services.Services
         {
             return message.Contains(" not found\r\n");
         }
-        public bool RedirectPort(SshConnectionDto sshConnection, string originHost, uint originPort, uint destinationPort,string destinationHost)
+        public bool RedirectPort(SshConnectionDto sshConnection, string originHost, uint originPort, uint destinationPort, string destinationHost)
         {
             var connected = checkOrCreateConnection(sshConnection);
             int intPort = int.Parse(sshConnection.TargetPort);

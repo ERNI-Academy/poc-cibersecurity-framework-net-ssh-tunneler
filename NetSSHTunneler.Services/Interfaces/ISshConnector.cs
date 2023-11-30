@@ -8,9 +8,9 @@ namespace NetSSHTunneler.Services.Interfaces
     public interface ISshConnector
     {
         ConnectionStatusResponse CheckConnection(SshConnectionDto sshConnection);
-
         CommandResponse SendCommand(SshConnectionDto sshConnection, CommandContainer command);
         DiscoveryResults ProcessDiscovery(SshConnectionDto sshConnection, List<string> files);
         bool RedirectPort(SshConnectionDto sshConnection, string originHost, uint originPort, uint destinationPort, string destinationHost);
+        string ProcessResponse(string connection,CommandContainer command);
     }
 }
