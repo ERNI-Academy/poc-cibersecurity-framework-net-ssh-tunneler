@@ -17,7 +17,10 @@ namespace NetSSHTunneler.Services
 
         public async Task SendMessage(NewMessage message)
         {
-            await _hubContext.Clients.All.SendAsync("NewMessage", message);
+            if (!string.IsNullOrWhiteSpace(message.Message))
+            {
+                await _hubContext.Clients.All.SendAsync("NewMessage", message);
+            }
         }
     }
 }

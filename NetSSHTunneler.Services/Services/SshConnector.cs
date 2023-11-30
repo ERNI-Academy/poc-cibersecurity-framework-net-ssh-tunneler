@@ -338,7 +338,7 @@ namespace NetSSHTunneler.Services.Services
             while (!NewCommand)
             {
                 message = Consoles[connection].Read();
-                message = Regex.Replace(message, @"[^\u0000-\u007F]+", string.Empty);
+                message = Regex.Replace(message, @"\u001b\[[0-9;?]*[a-zA-Z]", string.Empty);
                 fullMessage += message;
                 if (fullMessage.Length > command.Length)
                 {
