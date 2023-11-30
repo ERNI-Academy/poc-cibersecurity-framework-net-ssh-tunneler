@@ -33,6 +33,7 @@ namespace NetSSHTunneler.Controllers
                 var sshConnectionDto = JsonSerializer.Deserialize<HostInfoDto>(json);
                 sshConnectionDto.conectionInfo.AttackedIp = Command.AttackedIp;
                 CommandContainer newCommand = new CommandContainer();
+                newCommand.Interactive = true;
                 newCommand.Commands.Add(Command.Command);
                 newCommand.CommandConfig.Timeout = 20000;
                 CommandResponse result = _sshConnector.SendCommand(sshConnectionDto.conectionInfo, newCommand);

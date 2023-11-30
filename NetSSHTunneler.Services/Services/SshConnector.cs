@@ -329,14 +329,17 @@ namespace NetSSHTunneler.Services.Services
         public string ProcessResponse(string connection, CommandContainer command)
         {
             var message = "";
+            var fullMessage = "";
+
             while (!NewCommand)
             {
-                message += Consoles[connection].Read();
+                message= Consoles[connection].Read();
+                fullMessage += message;
                 NewMessage newMessage = new NewMessage("kk", message, "kk");
                 _eventService.SendMessage(newMessage);
 
             }
-            return message;
+            return fullMessage;
         }
         public CommandResponse SendCommand(SshConnectionDto sshConnection, CommandContainer command)
         {
