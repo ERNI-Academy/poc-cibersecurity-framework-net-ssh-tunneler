@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using System.Text;
 
 namespace NetSSHTunneler.Services.Services
 {
@@ -333,16 +334,15 @@ namespace NetSSHTunneler.Services.Services
 
             while (!NewCommand)
             {
-                message = Consoles[connection].ReadLine();
-                if (message != command.Commands[0])
-                {
+                message = Consoles[connection].Read();
+                
                     fullMessage += message + "\r\n";
                     if (!string.IsNullOrWhiteSpace(message))
                     {
                         NewMessage newMessage = new NewMessage("kk", message, "kk");
                         _eventService.SendMessage(newMessage);
                     }
-                }
+                
 
             }
             return fullMessage;
@@ -366,8 +366,9 @@ namespace NetSSHTunneler.Services.Services
                     try
                     {
                         var basura = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
-                        Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine(command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp));
-                        Consoles[sshConnection.TargetIp + ":" + intPort].Flush();
+                        string scommand = command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp);
+                        Consoles[sshConnection.TargetIp + ":" + intPort].Write(Encoding.UTF8.GetBytes(scommand),0,scommand.Length);
+                        
                         NewCommand = false;
                         if (command.Interactive)
                         {
