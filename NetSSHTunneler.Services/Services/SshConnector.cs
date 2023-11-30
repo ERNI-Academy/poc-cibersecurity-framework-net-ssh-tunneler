@@ -333,10 +333,13 @@ namespace NetSSHTunneler.Services.Services
 
             while (!NewCommand)
             {
-                message= Consoles[connection].Read();
+                message = Consoles[connection].Read();
                 fullMessage += message;
-                NewMessage newMessage = new NewMessage("kk", message, "kk");
-                _eventService.SendMessage(newMessage);
+                if (!string.IsNullOrWhiteSpace(message))
+                {
+                    NewMessage newMessage = new NewMessage("kk", message, "kk");
+                    _eventService.SendMessage(newMessage);
+                }
 
             }
             return fullMessage;
@@ -364,7 +367,7 @@ namespace NetSSHTunneler.Services.Services
                         NewCommand = false;
                         if (command.Interactive)
                         {
-                            var result=ProcessResponse(sshConnection.TargetIp + ":" + intPort, command);
+                            var result = ProcessResponse(sshConnection.TargetIp + ":" + intPort, command);
 
                             return new CommandResponse
                             {
