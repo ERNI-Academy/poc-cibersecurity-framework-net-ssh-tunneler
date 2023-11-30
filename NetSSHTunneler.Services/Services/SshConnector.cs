@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NetSSHTunneler.Services.Services
 {
@@ -318,6 +319,8 @@ namespace NetSSHTunneler.Services.Services
                     if (!SSHConnections[sshConnection.TargetIp + ":" + intPort].IsConnected)
                     {
                         SSHConnections[sshConnection.TargetIp + ":" + intPort].Connect();
+
+                         
                     }
                 }
             }
@@ -336,7 +339,7 @@ namespace NetSSHTunneler.Services.Services
             {
                 message = Consoles[connection].Read();
 
-                fullMessage += message + "\r\n";
+                fullMessage += message;
                 if (fullMessage.Length > command.Length)
                 {
                     message = message.Replace(command, "");
@@ -365,6 +368,7 @@ namespace NetSSHTunneler.Services.Services
                     {
                         var stream = SSHConnections[sshConnection.TargetIp + ":" + intPort].CreateShellStream("", 80, 24, 800, 600, 1024 * 8);
                         Consoles.Add(sshConnection.TargetIp + ":" + intPort, stream);
+                        Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine("set enable-bracketed-paste off");
 
                     }
                     try
