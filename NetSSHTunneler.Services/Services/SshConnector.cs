@@ -333,12 +333,15 @@ namespace NetSSHTunneler.Services.Services
 
             while (!NewCommand)
             {
-                message = Consoles[connection].Read();
-                fullMessage += message;
-                if (!string.IsNullOrWhiteSpace(message))
+                message = Consoles[connection].ReadLine();
+                if (message != command.Commands[0])
                 {
-                    NewMessage newMessage = new NewMessage("kk", message, "kk");
-                    _eventService.SendMessage(newMessage);
+                    fullMessage += message + "\r\n";
+                    if (!string.IsNullOrWhiteSpace(message))
+                    {
+                        NewMessage newMessage = new NewMessage("kk", message, "kk");
+                        _eventService.SendMessage(newMessage);
+                    }
                 }
 
             }
