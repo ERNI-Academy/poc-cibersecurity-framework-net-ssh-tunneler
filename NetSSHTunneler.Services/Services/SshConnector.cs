@@ -369,7 +369,7 @@ namespace NetSSHTunneler.Services.Services
                         string scommand = command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp)+"\r\n";
                         //Consoles[sshConnection.TargetIp + ":" + intPort].Write(Encoding.UTF8.GetBytes(scommand), scommand.Length, scommand.Length);
                         Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine(scommand);
-                        Consoles[sshConnection.TargetIp + ":" + intPort].ReadLine(new TimeSpan(1));
+                        Consoles[sshConnection.TargetIp + ":" + intPort].Read();
                         NewCommand = false;
                         if (command.Interactive)
                         {
