@@ -368,7 +368,7 @@ namespace NetSSHTunneler.Services.Services
                     {
                         var stream = SSHConnections[sshConnection.TargetIp + ":" + intPort].CreateShellStream("", 80, 24, 800, 600, 1024 * 8);
                         Consoles.Add(sshConnection.TargetIp + ":" + intPort, stream);
-                        Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine("set enable-bracketed-paste off");
+                        Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine("bind set enable-bracketed-paste off");
 
                     }
                     try
