@@ -330,6 +330,10 @@ namespace NetSSHTunneler.Services.Services
             }
             return true;
         }
+        public static string TrimNonAscii(this string value)
+        {
+            
+        }
         public string ProcessResponse(string connection, string command)
         {
             var message = "";
@@ -338,7 +342,9 @@ namespace NetSSHTunneler.Services.Services
             while (!NewCommand)
             {
                 message = Consoles[connection].Read();
-                message = Regex.Replace(message, @"[^\u0000-\u007F]+", string.Empty);
+                string pattern = "[^ -~]+";
+                Regex reg_exp = new Regex(pattern);
+                message = reg_exp.Replace(message, "");
                 fullMessage += message;
                 if (fullMessage.Length > command.Length)
                 {
