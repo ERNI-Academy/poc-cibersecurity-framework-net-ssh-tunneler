@@ -339,6 +339,7 @@ namespace NetSSHTunneler.Services.Services
                 fullMessage += message + "\r\n";
                 if (fullMessage.Length > command.Length)
                 {
+                    message = message.Replace(command, "");
                     if (!string.IsNullOrWhiteSpace(message))
                     {
                         NewMessage newMessage = new NewMessage("kk", message, "kk");
