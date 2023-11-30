@@ -327,7 +327,7 @@ namespace NetSSHTunneler.Services.Services
             }
             return true;
         }
-        public string ProcessResponse(string connection, CommandContainer command)
+        public string ProcessResponse(string connection, string command)
         {
             var message = "";
             var fullMessage = "";
@@ -335,14 +335,17 @@ namespace NetSSHTunneler.Services.Services
             while (!NewCommand)
             {
                 message = Consoles[connection].Read();
-                
-                    fullMessage += message + "\r\n";
+
+                fullMessage += message + "\r\n";
+                if (fullMessage.Length > command.Length)
+                {
                     if (!string.IsNullOrWhiteSpace(message))
                     {
                         NewMessage newMessage = new NewMessage("kk", message, "kk");
                         _eventService.SendMessage(newMessage);
                     }
-                
+                }
+
 
             }
             return fullMessage;
@@ -366,14 +369,14 @@ namespace NetSSHTunneler.Services.Services
                     try
                     {
                         var basura = Consoles[sshConnection.TargetIp + ":" + intPort].Read();
-                        string scommand = command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp)+"\r\n";
+                        string scommand = command.Commands[0].Replace('\n', ' ').Replace("{target}", sshConnection.AttackedIp) + "\r\n";
                         //Consoles[sshConnection.TargetIp + ":" + intPort].Write(Encoding.UTF8.GetBytes(scommand), scommand.Length, scommand.Length);
                         Consoles[sshConnection.TargetIp + ":" + intPort].WriteLine(scommand);
-                        Consoles[sshConnection.TargetIp + ":" + intPort].Read();
+
                         NewCommand = false;
                         if (command.Interactive)
                         {
-                            var result = ProcessResponse(sshConnection.TargetIp + ":" + intPort, command);
+                            var result = ProcessResponse(sshConnection.TargetIp + ":" + intPort, scommand);
 
                             return new CommandResponse
                             {
