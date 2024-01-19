@@ -339,9 +339,7 @@ namespace NetSSHTunneler.Services.Services
             while (!NewCommand)
             {
                 message = Consoles[connection].Read();
-                string pattern = "[^ -~]+";
-                Regex reg_exp = new Regex(pattern);
-                message = reg_exp.Replace(message, "");
+                message = Regex.Replace(message, @"\u001b\[[0-9;?]*[a-zA-Z]", string.Empty);
                 fullMessage += message;
                 if (fullMessage.Length > command.Length)
                 {

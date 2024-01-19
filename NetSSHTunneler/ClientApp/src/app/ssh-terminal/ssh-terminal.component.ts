@@ -90,7 +90,6 @@ export class SshTerminalComponent implements OnInit {
   }
 
   private newUser(message: string) {
-    console.log(message);
     this.conversation.push({
       userName: 'Sistema',
       message: message
@@ -98,9 +97,16 @@ export class SshTerminalComponent implements OnInit {
   }
 
   private newMessage(message: NewMessage) {
+    // console.log(message);
+    // this._snackBar.open(message.message, null);
+    // this.conversation.push(message);
     console.log(message);
-    this._snackBar.open(message.message, null);
-    this.conversation.push(message);
+    const newTerminalFlow = new TerminalFlow();
+      newTerminalFlow.results = [];
+      newTerminalFlow.results.push(message.message);
+      // this.path = response.path;
+      newTerminalFlow.type = TerminalFlowType.ReceivedOk;
+      this.responses.push(newTerminalFlow);
   }
 
   private leftUser(message: string) {
@@ -126,20 +132,20 @@ export class SshTerminalComponent implements OnInit {
       commandToSend.Command = command;
       commandToSend.TargetIp = this.commonService.lastBase;
       commandToSend.AttackedIp = this.commonService.lastTarget;
-      const response = await this.commandApi.sendCommand(commandToSend);
-      const newTerminalFlow = new TerminalFlow();
-      newTerminalFlow.results = [];
-      response.results.forEach(result => {
-        console.log(result);
-        newTerminalFlow.results.push(result);
-      });
-      this.path = response.path;
-      if (response.error) {
-        newTerminalFlow.type = TerminalFlowType.ReceivedError;
-      } else {
-        newTerminalFlow.type = TerminalFlowType.ReceivedOk;
-      }
-      this.responses.push(newTerminalFlow);
+       await this.commandApi.sendCommand(commandToSend);
+      // const newTerminalFlow = new TerminalFlow();
+      // newTerminalFlow.results = [];
+      // response.results.forEach(result => {
+      //   console.log(result);
+      //   newTerminalFlow.results.push(result);
+      // });
+      // this.path = response.path;
+      // if (response.error) {
+      //   newTerminalFlow.type = TerminalFlowType.ReceivedError;
+      // } else {
+      //   newTerminalFlow.type = TerminalFlowType.ReceivedOk;
+      // }
+      // this.responses.push(newTerminalFlow);
     }
   }
 
