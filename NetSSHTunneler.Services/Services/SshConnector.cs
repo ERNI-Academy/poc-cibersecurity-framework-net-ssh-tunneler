@@ -330,10 +330,7 @@ namespace NetSSHTunneler.Services.Services
             }
             return true;
         }
-        public static string TrimNonAscii(this string value)
-        {
-            
-        }
+       
         public string ProcessResponse(string connection, string command)
         {
             var message = "";
